@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+
+<body>
+    <h2>Bienvenue, <span th:text="${client.prenom} + ' ' + ${client.nom}">User</span>!</h2>
+    <p>Connecté avec succès.</p>
+    <a href="/logout">Deconnexion</a>
+</body>
+
+</html>
