@@ -22,4 +22,8 @@ public class CommandeService {
     public List<Commande> findCommandesByClient(Client client) {
         return commandeRepository.findByClient(client);
     }
+
+    public Commande getCommandeById(Long id) {
+        return commandeRepository.findById(id).orElse(null);
+    }
 }

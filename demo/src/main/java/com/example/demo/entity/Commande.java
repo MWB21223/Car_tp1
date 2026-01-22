@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -13,6 +15,9 @@ public class Commande {
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
+
+    @OneToMany(mappedBy = "commande", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<LigneCommande> lignes;
 
     public Commande() {
     }
@@ -44,5 +49,13 @@ public class Commande {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public List<LigneCommande> getLignes() {
+        return lignes;
+    }
+
+    public void setLignes(List<LigneCommande> lignes) {
+        this.lignes = lignes;
     }
 }

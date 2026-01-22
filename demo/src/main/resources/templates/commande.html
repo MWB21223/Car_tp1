@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Détails de la Commande</title>
+</head>
+
+<body>
+    <h2>Bonjour <span th:text="${client.prenom} + ' ' + ${client.nom}">User</span></h2>
+
+    <a th:href="@{/home}">Toutes les commandes</a>
+
+    <h3 th:text="'Commande ' + ${commande.titre}">Commande Titre</h3>
+
+    <a href="#">Imprimer</a>
+
+    <h4>Lignes de commande</h4>
+    <ul>
+        <li th:each="ligne : ${commande.lignes}">
+            <span th:text="${ligne.libelle} + ' ' + ${ligne.quantite} + ' ' + ${ligne.prixUnitaire}">Item 1 10.0</span>
+            <form th:action="@{/commande}" method="post" style="display:inline;">
+                <input type="hidden" name="ligneId" th:value="${ligne.id}" />
+                <button type="submit"
+                    style="background:none; border:none; color:blue; text-decoration:underline; cursor:pointer;">delete</button>
+            </form>
+        </li>
+    </ul>
+
+    <h4>Ajout d'une ligne de commande</h4>
+    <form th:action="@{/commande}" method="post">
+        <div>
+            <label>Libellé : <input type="text" name="libelle" required /></label>
+        </div>
+        <div>
+            <label>Quantité : <input type="number" name="quantite" required /></label>
+        </div>
+        <div>
+            <label>Prix unitaire : <input type="number" step="0.01" name="prixUnitaire" required /></label>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+
+</html>
