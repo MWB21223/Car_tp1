@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Client;
 import com.example.demo.service.ClientService;
+import com.example.demo.service.CommandeService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,9 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
+    @Autowired
+    private CommandeService commandeService;
+
     @GetMapping("/signup")
     public String showSignupForm(Model model) {
         model.addAttribute("client", new Client());
@@ -30,7 +34,8 @@ public class ClientController {
     }
 
     @GetMapping("/login")
-    public String showLoginForm() {
+    public String showLoginForm(Model model) {
+        model.addAttribute("client", new Client()); 
         return "login";
     }
 
@@ -58,8 +63,20 @@ public class ClientController {
         Client client = (Client) session.getAttribute("user");
         if (client != null) {
             model.addAttribute("client", client);
+            model.addAttribute("commandes", commandeService.findCommandesByClient(client));
             return "index";
         }
         return "redirect:/login";
     }
+
+    @PostMapping("/home")
+    public String createCommande(@RequestParam String titre, HttpSession session) {
+        Client client = (Client) session.getAttribute("user");
+        if (client != null) {
+            commandeService.createCommande(titre, client);
+            return "redirect:/home";
+        }
+        return "redirect:/login";
+    }
+
 }

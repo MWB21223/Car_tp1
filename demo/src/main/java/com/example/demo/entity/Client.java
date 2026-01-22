@@ -5,6 +5,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
+import jakarta.persistence.CascadeType;
+
+import jakarta.persistence.OneToMany;
+import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 public class Client {
@@ -20,6 +25,9 @@ public class Client {
 
     private String nom;
     private String prenom;
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private List<Commande> commandes = new ArrayList<>();
 
     public Client() {
     }
