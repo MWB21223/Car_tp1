@@ -28,6 +28,9 @@ public class CommandeController {
 
     @PostMapping(value = "/commande", params = "id")
     public String selectCommande(@RequestParam Long id, HttpSession session) {
+        if (session.getAttribute("user") == null) {
+            return "redirect:/login";
+        }
         session.setAttribute("currentCommandeId", id);
         return "redirect:/commande";
     }
@@ -54,6 +57,9 @@ public class CommandeController {
     @PostMapping(value = "/commande", params = { "libelle", "quantite", "prixUnitaire" })
     public String addLine(@RequestParam String libelle, @RequestParam Integer quantite,
             @RequestParam Double prixUnitaire, HttpSession session) {
+        if (session.getAttribute("user") == null) {
+            return "redirect:/login";
+        }
         Long commandeId = (Long) session.getAttribute("currentCommandeId");
         if (commandeId != null) {
             ligneCommandeService.addLine(commandeId, libelle, quantite, prixUnitaire);
@@ -63,6 +69,9 @@ public class CommandeController {
 
     @PostMapping(value = "/commande", params = "ligneId")
     public String removeLine(@RequestParam Long ligneId, HttpSession session) {
+        if (session.getAttribute("user") == null) {
+            return "redirect:/login";
+        }
         ligneCommandeService.removeLine(ligneId);
         return "redirect:/commande";
     }
