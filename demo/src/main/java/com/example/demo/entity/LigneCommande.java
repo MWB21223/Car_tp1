@@ -28,7 +28,7 @@ public class LigneCommande {
     }
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Long id) {
@@ -65,5 +65,12 @@ public class LigneCommande {
 
     public void setCommande(Commande commande) {
         this.commande = commande;
+    }
+
+    public Double getPrixTotal() {
+        if (quantite != null && prixUnitaire != null) {
+            return quantite * prixUnitaire;
+        }
+        return 0.0;
     }
 }

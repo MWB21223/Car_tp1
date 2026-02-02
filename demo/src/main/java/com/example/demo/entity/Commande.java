@@ -58,4 +58,15 @@ public class Commande {
     public void setLignes(List<LigneCommande> lignes) {
         this.lignes = lignes;
     }
+
+    public Double getTotal() {
+        if (lignes == null || lignes.isEmpty()) {
+            return 0.0;
+        }
+        double sum = 0.0;
+        for (LigneCommande ligne : lignes) {
+            sum += ligne.getPrixTotal();
+        }
+        return sum;
+    }
 }
